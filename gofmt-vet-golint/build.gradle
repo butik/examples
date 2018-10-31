@@ -20,7 +20,10 @@ vet {
 // You should make sure golint is in your $PATH
 task golint(type: com.github.blindpirate.gogradle.Go){
     continueWhenFail = true
-    run('golint github.com/my/package', writeTo('stdout.txt'), appendTo('stderr.txt'))
+    run('golint github.com/my/package') {
+        stdout writeTo('stdout.txt')
+        stderr appendTo('stderr.txt')
+    }
 }
 
 check.dependsOn golint
