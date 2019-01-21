@@ -1,29 +1,29 @@
 plugins {
-    id 'com.github.blindpirate.gogradle' version '0.8.0'
+    id 'com.github.blindpirate.gogradle' version '0.11'
 }
 
 golang {
     packagePath = 'github.com/my/package' // go import path of project to be built, NOT local file system path!
 }
 
-build.dependsOn check 
+goBuild.dependsOn goCheck 
 
-fmt {
+gofmt {
      gofmt '-e .'
 }
 
-vet {
-    continueWhenFail = true
+goVet {
+    continueOnFailure = true
     go 'tool vet -v .'
 }
 
 // You should make sure golint is in your $PATH
 task golint(type: com.github.blindpirate.gogradle.Go){
-    continueWhenFail = true
+    continueOnFailure = true
     run('golint github.com/my/package') {
-        stdout writeTo('stdout.txt')
+        stdout writeTo('stdout.txt') 
         stderr appendTo('stderr.txt')
     }
 }
 
-check.dependsOn golint
+goCheck.dependsOn golint
